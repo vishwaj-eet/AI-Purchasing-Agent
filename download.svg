@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 565.7617499999999 1669.056" width="565.7617499999999" height="1669.056" style="--bg:#1F1F1F;--fg:#CCCCCC;--line:#CCCCCC;--accent:#0078D4;--muted:#CCCCCCCC;--surface:#181818;--border:#CCCCCC;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="INTAKE" data-label="1. Signal Intake &amp; Triage">
+  <rect x="114.36075" y="40" width="411.40099999999995" height="266.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="114.36075" y="40" width="411.40099999999995" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="126.36075" y="54" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">1. Signal Intake &amp; Triage</text>
+</g>
+<g class="subgraph" data-id="REASONING" data-label="2. Agent Reasoning &amp; Knowledge Retrieval">
+  <rect x="40" y="366.70000000000005" width="350.26949999999994" height="249.4" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="366.70000000000005" width="350.26949999999994" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="380.70000000000005" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">2. Agent Reasoning &amp; Knowledge Retrieval</text>
+</g>
+<g class="subgraph" data-id="GUARDRAILS" data-label="3. Strict Compliance &amp; Guardrails">
+  <rect x="143.6665" y="676.1" width="251.04899999999992" height="333.856" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="143.6665" y="676.1" width="251.04899999999992" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="155.6665" y="690.1" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">3. Strict Compliance &amp; Guardrails</text>
+</g>
+<g class="subgraph" data-id="ACTIONS" data-label="4. Execution &amp; HITL Escalation">
+  <rect x="153.29950000000002" y="1138.2559999999999" width="311.6817499999999" height="283.20000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="153.29950000000002" y="1138.2559999999999" width="311.6817499999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="165.29950000000002" y="1152.2559999999999" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">4. Execution &amp; HITL Escalation</text>
+</g>
+<g class="subgraph" data-id="MEMORY" data-label="5. Memory &amp; Audit Persistence">
+  <rect x="146.26000000000002" y="1481.4560000000001" width="245.86199999999997" height="147.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="146.26000000000002" y="1481.4560000000001" width="245.86199999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="158.26000000000002" y="1495.4560000000001" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">5. Memory &amp; Audit Persistence</text>
+</g>
+<polyline class="edge" data-from="DA" data-to="SA" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="343.58799999999997,290.70000000000005 343.58799999999997,539.2 269.191,539.2 269.191,563.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="SA" data-to="GC" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="269.191,600.1 269.191,720.1" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CHK" data-to="AUTO" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Passed (Low Risk)" points="237.6983333333333,962.4633333333334 237.6983333333333,1051.9560000000001 204.40999999999997,1051.9560000000001 204.40999999999997,1120.2559999999999 205.59425,1120.2559999999999 205.59425,1281.8559999999998 235.89383333333333,1281.8559999999998 235.89383333333333,1317.8559999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="CHK" data-to="HITL" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Threshold Exceeded / Risk" points="300.6836666666667,962.4633333333334 300.6836666666667,1051.9560000000001 333.972,1051.9560000000001 333.972,1120.2559999999999 332.78774999999996,1120.2559999999999 332.78774999999996,1182.2559999999999" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="AUTO" data-to="MEM" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="269.19100000000003,1405.456 269.19100000000003,1525.4560000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="E" data-to="ET" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="253.59374999999997,120.9 253.59374999999997,168.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="INV" data-to="DA" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="433.58225,205.8 433.58225,229.8 343.58799999999997,229.8 343.58799999999997,253.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="ET" data-to="DA" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="253.59374999999997,205.8 253.59374999999997,229.8 343.58799999999997,229.8 343.58799999999997,253.8" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="RAG" data-to="SA" data-style="solid" data-arrow-start="true" data-arrow-end="true" points="194.79399999999998,515.2 194.79399999999998,539.2 269.191,539.2 269.191,563.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" marker-start="url(#arrowhead-start)" />
+<polyline class="edge" data-from="GC" data-to="CHK" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="269.191,757 269.191,805" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="HITL" data-to="AUTO" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="332.78774999999996,1269.8559999999998 332.78774999999996,1281.8559999999998 302.48816666666664,1281.8559999999998 302.48816666666664,1317.8559999999998" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="CHK" data-to="AUTO" data-label="Passed (Low Risk)">
+  <rect x="151.40999999999997" y="1058.9560000000001" width="105.562" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="204.19099999999997" y="1074.1060000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Passed (Low Risk)</text>
+</g>
+<g class="edge-label" data-from="CHK" data-to="HITL" data-label="Threshold Exceeded / Risk">
+  <rect x="260.972" y="1058.9560000000001" width="145.954" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="333.94899999999996" y="1074.1060000000002" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Threshold Exceeded / Risk</text>
+</g>
+<g class="node" data-id="E" data-label="Inbound Supplier Emails / ASN / EDI" data-shape="rectangle">
+  <rect x="130.36075" y="84" width="246.46599999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="253.59374999999997" y="102.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Inbound Supplier Emails / ASN / EDI</text>
+</g>
+<g class="node" data-id="ET" data-label="Email Triage Agent" data-shape="rectangle">
+  <rect x="177.78474999999997" y="168.9" width="151.618" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="253.59374999999997" y="187.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Email Triage Agent</text>
+</g>
+<g class="node" data-id="INV" data-label="Inventory Scanner" data-shape="rectangle">
+  <rect x="357.40274999999997" y="168.9" width="152.359" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="433.58225" y="187.35000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Inventory Scanner</text>
+</g>
+<g class="node" data-id="DA" data-label="Demand &amp; Velocity Analyst Agent" data-shape="rectangle">
+  <rect x="227.765" y="253.8" width="231.64599999999996" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="343.58799999999997" y="272.25" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Demand &amp; Velocity Analyst Agent</text>
+</g>
+<g class="node" data-id="SA" data-label="Sourcing &amp; Negotiation Agent" data-shape="rectangle">
+  <rect x="164.1125" y="563.2" width="210.15699999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="269.191" y="581.6500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Sourcing &amp; Negotiation Agent</text>
+</g>
+<g class="node" data-id="RAG" data-label="Hybrid Vector Knowledge Base
+• SOP-PROC-001 (Approval Thresholds)
+• MSA-APEX-2025 (Lead Times &amp; SLAs)
+• MSA-NOVA-2025 (Volume Rebates)
+• SOP-COMPL-002 (RoHS / REACH)" data-shape="rectangle">
+  <rect x="56" y="410.70000000000005" width="277.58799999999997" height="104.50000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="194.79399999999998" y="462.95000000000005" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="194.79399999999998" dy="-29.250000000000004">Hybrid Vector Knowledge Base</tspan><tspan x="194.79399999999998" dy="16.900000000000002">• SOP-PROC-001 (Approval Thresholds)</tspan><tspan x="194.79399999999998" dy="16.900000000000002">• MSA-APEX-2025 (Lead Times &amp; SLAs)</tspan><tspan x="194.79399999999998" dy="16.900000000000002">• MSA-NOVA-2025 (Volume Rebates)</tspan><tspan x="194.79399999999998" dy="16.900000000000002">• SOP-COMPL-002 (RoHS / REACH)</tspan></text>
+</g>
+<g class="node" data-id="GC" data-label="Guardrail &amp; Compliance Officer" data-shape="rectangle">
+  <rect x="159.6665" y="720.1" width="219.04899999999992" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="269.191" y="738.5500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Guardrail &amp; Compliance Officer</text>
+</g>
+<g class="node" data-id="CHK" data-label="Policy Verification
+• Amount ≤ $5,000?
+• Preferred Vendor?
+• Price Drift ≤ 5.0%?
+• Valid Catalog SKU?" data-shape="diamond">
+  <polygon points="269.191,805 363.669,899.4780000000001 269.191,993.9560000000001 174.71299999999997,899.4780000000001" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="269.191" y="899.4780000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="269.191" dy="-29.250000000000004">Policy Verification</tspan><tspan x="269.191" dy="16.900000000000002">• Amount ≤ $5,000?</tspan><tspan x="269.191" dy="16.900000000000002">• Preferred Vendor?</tspan><tspan x="269.191" dy="16.900000000000002">• Price Drift ≤ 5.0%?</tspan><tspan x="269.191" dy="16.900000000000002">• Valid Catalog SKU?</tspan></text>
+</g>
+<g class="node" data-id="AUTO" data-label="Autonomous PO Execution
+• Generate PO in ERP
+• Dispatch Supplier Email
+• Update Stock Projections" data-shape="rectangle">
+  <rect x="169.29950000000002" y="1317.8559999999998" width="199.78299999999996" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="269.19100000000003" y="1361.6559999999997" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="269.19100000000003" dy="-20.8">Autonomous PO Execution</tspan><tspan x="269.19100000000003" dy="16.900000000000002">• Generate PO in ERP</tspan><tspan x="269.19100000000003" dy="16.900000000000002">• Dispatch Supplier Email</tspan><tspan x="269.19100000000003" dy="16.900000000000002">• Update Stock Projections</tspan></text>
+</g>
+<g class="node" data-id="HITL" data-label="Human-in-the-Loop (HITL) Queue
+• Flag Escalation Reason
+• Attach RAG Policy Evidence
+• One-Click Buyer Approval/Edit" data-shape="rectangle">
+  <rect x="216.59425" y="1182.2559999999999" width="232.38699999999994" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="332.78774999999996" y="1226.0559999999998" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="332.78774999999996" dy="-20.8">Human-in-the-Loop (HITL) Queue</tspan><tspan x="332.78774999999996" dy="16.900000000000002">• Flag Escalation Reason</tspan><tspan x="332.78774999999996" dy="16.900000000000002">• Attach RAG Policy Evidence</tspan><tspan x="332.78774999999996" dy="16.900000000000002">• One-Click Buyer Approval/Edit</tspan></text>
+</g>
+<g class="node" data-id="MEM" data-label="Agent Memory Store
+• Supplier OTIF Scorecards
+• Workflow State Checkpoints
+• Immutable Audit Traces" data-shape="rectangle">
+  <rect x="162.26000000000002" y="1525.4560000000001" width="213.86199999999997" height="87.60000000000001" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="269.19100000000003" y="1569.256" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="269.19100000000003" dy="-20.8">Agent Memory Store</tspan><tspan x="269.19100000000003" dy="16.900000000000002">• Supplier OTIF Scorecards</tspan><tspan x="269.19100000000003" dy="16.900000000000002">• Workflow State Checkpoints</tspan><tspan x="269.19100000000003" dy="16.900000000000002">• Immutable Audit Traces</tspan></text>
+</g>
+</svg>

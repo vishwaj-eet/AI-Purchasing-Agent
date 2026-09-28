@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProcurePulse AI - Autonomous Procurement & Supply Chain Agent Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyan-600 to-sky-400 flex items-center justify-center shadow-lg shadow-sky-500/20">
+          <i class="fa-solid fa-microchip text-slate-950 text-xl font-black"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">ProcurePulse AI</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-sky-950 border border-sky-800 text-sky-400 font-semibold tracking-wider">ENTERPRISE AGENTS</span>
+          </div>
+          <p class="text-xs text-slate-400">Autonomous Supply Chain & Multi-Agent Procurement Orchestrator</p>
+        </div>
+      </div>
+
+      <!-- Live Engine Badges & Quick Action Buttons -->
+      <div class="flex items-center space-x-3">
+        <div class="hidden md:flex items-center space-x-2 bg-slate-950/80 border border-slate-800 rounded-lg px-3 py-1 text-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-slate-300 font-medium">Orchestrator:</span>
+          <span class="text-emerald-400 font-bold">LangGraph Active</span>
+        </div>
+
+        <button onclick="openEmailModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center space-x-2 border border-slate-700 transition">
+          <i class="fa-regular fa-envelope text-cyan-400"></i>
+          <span>Simulate Email</span>
+        </button>
+
+        <button onclick="triggerReplenishmentScan()" id="btn-run-scan" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-400 hover:to-cyan-400 text-slate-950 text-xs font-bold flex items-center space-x-2 shadow-md shadow-sky-500/20 transition">
+          <i class="fa-solid fa-bolt"></i>
+          <span>Run Agent Scan</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 overflow-x-auto text-xs font-medium border-t border-slate-800/60 pt-1">
+      <button onclick="switchTab('overview')" id="tab-overview" class="nav-tab px-4 py-2 text-sky-400 border-b-2 border-sky-400 font-bold flex items-center space-x-2">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Command Center</span>
+      </button>
+      <button onclick="switchTab('approvals')" id="tab-approvals" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-user-shield"></i>
+        <span>HITL Approvals</span>
+        <span id="badge-pending-approvals" class="hidden px-1.5 py-0.2 bg-amber-500/20 border border-amber-500/40 text-amber-400 rounded-full font-bold text-[10px]">0</span>
+      </button>
+      <button onclick="switchTab('inventory')" id="tab-inventory" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span>Inventory & Demand</span>
+      </button>
+      <button onclick="switchTab('orders')" id="tab-orders" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-file-invoice-dollar"></i>
+        <span>Purchase Orders</span>
+      </button>
+      <button onclick="switchTab('emails')" id="tab-emails" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-inbox"></i>
+        <span>Supplier Inbox</span>
+      </button>
+      <button onclick="switchTab('suppliers')" id="tab-suppliers" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-handshake"></i>
+        <span>Supplier Intelligence</span>
+      </button>
+      <button onclick="switchTab('rag')" id="tab-rag" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-book-bookmark"></i>
+        <span>RAG Policy Explorer</span>
+      </button>
+      <button onclick="switchTab('audit')" id="tab-audit" class="nav-tab px-4 py-2 text-slate-400 hover:text-slate-200 border-b-2 border-transparent flex items-center space-x-2">
+        <i class="fa-solid fa-list-check"></i>
+        <span>Audit & Agent Traces</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- KPI Metric Cards Banner -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="glass-panel p-4 rounded-xl">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400">Inventory At Risk</span>
+          <span class="w-7 h-7 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center text-xs"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span id="kpi-critical-stock" class="text-2xl font-bold text-rose-400">--</span>
+          <span class="text-xs text-slate-400">SKUs below safety stock</span>
+        </div>
+      </div>
+
+      <div class="glass-panel p-4 rounded-xl">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400">HITL Escalations</span>
+          <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs"><i class="fa-solid fa-user-clock"></i></span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span id="kpi-pending-approvals" class="text-2xl font-bold text-amber-400">--</span>
+          <span class="text-xs text-slate-400">requiring buyer review</span>
+        </div>
+      </div>
+
+      <div class="glass-panel p-4 rounded-xl">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400">Committed Spend</span>
+          <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs"><i class="fa-solid fa-dollar-sign"></i></span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span id="kpi-total-spend" class="text-2xl font-bold text-emerald-400">--</span>
+          <span class="text-xs text-slate-400">across active POs</span>
+        </div>
+      </div>
+
+      <div class="glass-panel p-4 rounded-xl">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-slate-400">Supplier OTIF SLA</span>
+          <span class="w-7 h-7 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs"><i class="fa-solid fa-truck-fast"></i></span>
+        </div>
+        <div class="mt-2 flex items-baseline space-x-2">
+          <span id="kpi-avg-reliability" class="text-2xl font-bold text-sky-400">--%</span>
+          <span class="text-xs text-slate-400">on-time delivery avg</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: COMMAND CENTER & WORKFLOW VISUALIZER -->
+    <section id="view-overview" class="tab-content space-y-6">
+      
+      <!-- Visual Multi-Agent Workflow State Diagram -->
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-network-wired text-sky-400"></i>
+              <span>Multi-Agent LangGraph Procurement Pipeline</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Autonomous collaboration across specialized agentic nodes, RAG policies, and guardrails.</p>
+          </div>
+          <div class="text-xs text-slate-400">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 mr-1.5"></span>State Machine Ready
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3 py-2">
+          <!-- Node 1 -->
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 font-semibold mb-2">
+                <span>01. TRIAGE</span>
+                <i class="fa-regular fa-envelope text-cyan-400"></i>
+              </div>
+              <h4 class="text-xs font-bold text-slate-200">Email Triage Agent</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Parses supplier emails, extracts POs, detects delay & price change signals.</p>
+            </div>
+            <div class="mt-3 text-[10px] text-cyan-400 bg-cyan-950/40 border border-cyan-900/60 rounded px-2 py-0.5 w-fit">
+              Signal Extraction
+            </div>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 font-semibold mb-2">
+                <span>02. DEMAND</span>
+                <i class="fa-solid fa-boxes-stacked text-blue-400"></i>
+              </div>
+              <h4 class="text-xs font-bold text-slate-200">Inventory & Demand</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Calculates burn rate, safety stock gaps, days of supply, and replenishment triggers.</p>
+            </div>
+            <div class="mt-3 text-[10px] text-blue-400 bg-blue-950/40 border border-blue-900/60 rounded px-2 py-0.5 w-fit">
+              EOQ & ROP Trigger
+            </div>
+          </div>
+
+          <!-- Node 3 -->
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 font-semibold mb-2">
+                <span>03. SOURCING + RAG</span>
+                <i class="fa-solid fa-scale-balanced text-indigo-400"></i>
+              </div>
+              <h4 class="text-xs font-bold text-slate-200">Sourcing & RAG</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Queries vector store for MSAs & SLAs; evaluates tier discounts and supplier OTIF.</p>
+            </div>
+            <div class="mt-3 text-[10px] text-indigo-400 bg-indigo-950/40 border border-indigo-900/60 rounded px-2 py-0.5 w-fit">
+              Hybrid Vector Search
+            </div>
+          </div>
+
+          <!-- Node 4 -->
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 font-semibold mb-2">
+                <span>04. GUARDRAILS</span>
+                <i class="fa-solid fa-shield-halved text-amber-400"></i>
+              </div>
+              <h4 class="text-xs font-bold text-slate-200">Compliance Officer</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Enforces spending delegation limits ($5k auto-cap, price drift ≤ 5%, vendor approval).</p>
+            </div>
+            <div class="mt-3 text-[10px] text-amber-400 bg-amber-950/40 border border-amber-900/60 rounded px-2 py-0.5 w-fit">
+              Policy Verification
+            </div>
+          </div>
+
+          <!-- Node 5 -->
+          <div class="bg-slate-900 border border-slate-800 p-3.5 rounded-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between text-xs text-slate-400 font-semibold mb-2">
+                <span>05. EXECUTION</span>
+                <i class="fa-solid fa-paper-plane text-emerald-400"></i>
+              </div>
+              <h4 class="text-xs font-bold text-slate-200">PO Action / HITL</h4>
+              <p class="text-[11px] text-slate-400 mt-1">Transmits approved PO & dispatches vendor email, or suspends for buyer sign-off.</p>
+            </div>
+            <div class="mt-3 text-[10px] text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 rounded px-2 py-0.5 w-fit">
+              Dispatch / Escalate
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Run + Live Workflow Output Console -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Run Box -->
+        <div class="glass-panel p-5 rounded-2xl space-y-4">
+          <h3 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+            <i class="fa-solid fa-sliders text-cyan-400"></i>
+            <span>Trigger Agentic Workflow</span>
+          </h3>
+          <p class="text-xs text-slate-400">Launch an autonomous replenishment sweep across all inventory SKUs, or target a specific component.</p>
+          
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1">Target SKU Filter (Optional)</label>
+            <select id="select-target-sku" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-sky-500">
+              <option value="">All SKUs (Comprehensive Scan)</option>
+              <option value="SKU-ELEC-001">SKU-ELEC-001 (STM32F407 MCU)</option>
+              <option value="SKU-ELEC-002">SKU-ELEC-002 (LM2596 Regulator - Emergency!)</option>
+              <option value="SKU-PACK-001">SKU-PACK-001 (Corrugated Boxes)</option>
+              <option value="SKU-MECH-001">SKU-MECH-001 (M3 Stainless Screws)</option>
+            </select>
+          </div>
+
+          <button onclick="executeSelectedWorkflow()" class="w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs flex items-center justify-center space-x-2 shadow-lg shadow-sky-500/20 transition">
+            <i class="fa-solid fa-play"></i>
+            <span>Execute Workflow Now</span>
+          </button>
+
+          <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-xl space-y-2">
+            <div class="text-[11px] font-semibold text-slate-300">Guardrail Enforcement Rules:</div>
+            <ul class="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+              <li>Auto-approval limit: <span class="text-emerald-400 font-mono">≤ $5,000.00</span></li>
+              <li>Price variance tolerance: <span class="text-amber-400 font-mono">≤ 5.0%</span></li>
+              <li>Unapproved vendors: <span class="text-rose-400 font-semibold">Automatic Escalation</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Workflow Execution Results Console -->
+        <div class="lg:col-span-2 glass-panel p-5 rounded-2xl flex flex-col">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+              <i class="fa-solid fa-terminal text-sky-400"></i>
+              <span>Agent Execution Console & Rationale</span>
+            </h3>
+            <span id="workflow-status-pill" class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 font-semibold">Idle</span>
+          </div>
+
+          <div id="workflow-console-output" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs overflow-y-auto max-h-[380px] space-y-3">
+            <div class="text-slate-500 italic">Ready for execution. Click "Execute Workflow Now" or "Simulate Email" to observe multi-agent orchestration.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: HUMAN-IN-THE-LOOP APPROVALS -->
+    <section id="view-approvals" class="tab-content hidden space-y-6">
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-user-shield text-amber-400"></i>
+              <span>Human-In-The-Loop (HITL) Escalation Queue</span>
+            </h2>
+            <p class="text-xs text-slate-400">Agentic procurement operations flagged for policy violations, high dollar values, or vendor risk.</p>
+          </div>
+          <button onclick="loadApprovals()" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">
+            <i class="fa-solid fa-rotate-right mr-1"></i>Refresh Queue
+          </button>
+        </div>
+
+        <div id="approvals-container" class="space-y-4">
+          <div class="text-center py-10 text-slate-500 text-xs">Loading pending approvals...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: INVENTORY & DEMAND COCKPIT -->
+    <section id="view-inventory" class="tab-content hidden space-y-6">
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-boxes-stacked text-sky-400"></i>
+              <span>Inventory Position & Consumption Velocity</span>
+            </h2>
+            <p class="text-xs text-slate-400">Live monitoring of stock levels, safety stock thresholds, and demand run-rates.</p>
+          </div>
+          <button onclick="loadInventory()" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">
+            <i class="fa-solid fa-rotate-right mr-1"></i>Refresh Stock
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="text-slate-400 uppercase bg-slate-900/60 border-b border-slate-800">
+              <tr>
+                <th class="py-3 px-4">SKU / Item</th>
+                <th class="py-3 px-4">Category</th>
+                <th class="py-3 px-4">Current Stock</th>
+                <th class="py-3 px-4">Reorder Point</th>
+                <th class="py-3 px-4">Safety Stock</th>
+                <th class="py-3 px-4">Days of Supply</th>
+                <th class="py-3 px-4">Health Status</th>
+                <th class="py-3 px-4 text-right">Quick Action</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body" class="divide-y divide-slate-800">
+              <tr><td colspan="8" class="text-center py-6 text-slate-500">Loading inventory data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: PURCHASE ORDERS -->
+    <section id="view-orders" class="tab-content hidden space-y-6">
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-file-invoice-dollar text-emerald-400"></i>
+              <span>Enterprise Purchase Orders (POs)</span>
+            </h2>
+            <p class="text-xs text-slate-400">Autonomous and manual purchase orders with live status tracking.</p>
+          </div>
+          <button onclick="loadOrders()" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">
+            <i class="fa-solid fa-rotate-right mr-1"></i>Refresh Orders
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-300">
+            <thead class="text-slate-400 uppercase bg-slate-900/60 border-b border-slate-800">
+              <tr>
+                <th class="py-3 px-4">PO Number</th>
+                <th class="py-3 px-4">Supplier</th>
+                <th class="py-3 px-4">Total Amount</th>
+                <th class="py-3 px-4">Approval Tier</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4">Type</th>
+                <th class="py-3 px-4">Delivery Due</th>
+                <th class="py-3 px-4 text-right">Details</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body" class="divide-y divide-slate-800">
+              <tr><td colspan="8" class="text-center py-6 text-slate-500">Loading purchase orders...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: SUPPLIER INBOX & EMAIL SIMULATOR -->
+    <section id="view-emails" class="tab-content hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Email Simulation Controls -->
+        <div class="glass-panel p-5 rounded-2xl space-y-4">
+          <h3 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+            <i class="fa-solid fa-paper-plane text-cyan-400"></i>
+            <span>Simulate Supplier Message</span>
+          </h3>
+          <p class="text-xs text-slate-400">Send realistic vendor communications to test real-time AI triage and parsing.</p>
+
+          <div class="space-y-2">
+            <button onclick="loadEmailTemplate('delay')" class="w-full text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs transition">
+              <div class="font-semibold text-rose-400">⚠️ Shipment Delay Notice</div>
+              <div class="text-[11px] text-slate-400 truncate">Nova Packaging: 8-day delay on PO-1049</div>
+            </button>
+            <button onclick="loadEmailTemplate('confirm')" class="w-full text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs transition">
+              <div class="font-semibold text-emerald-400">✓ Order Confirmation & ASN</div>
+              <div class="text-[11px] text-slate-400 truncate">Apex Electronics: PO-1048 accepted</div>
+            </button>
+            <button onclick="loadEmailTemplate('price')" class="w-full text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs transition">
+              <div class="font-semibold text-amber-400">📈 Price Revision Warning</div>
+              <div class="text-[11px] text-slate-400 truncate">Titan Fasteners: 12% raw steel surcharge</div>
+            </button>
+          </div>
+
+          <form id="form-simulate-email" onsubmit="submitSimulatedEmail(event)" class="space-y-3 pt-2">
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">From (Supplier Email)</label>
+              <input type="email" id="sim-sender" required value="orders@novapackaging.com" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Subject</label>
+              <input type="text" id="sim-subject" required value="Urgent Delivery Reschedule Notice - PO-1049" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1">Email Body</label>
+              <textarea id="sim-body" rows="4" required class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 font-mono">Due to unexpected freight route cancellations, delivery for PO-1049 is delayed by 10 days until 2026-10-18.</textarea>
+            </div>
+            <button type="submit" class="w-full py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center justify-center space-x-2 transition">
+              <i class="fa-solid fa-inbox"></i>
+              <span>Inject into Inbound Queue</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Inbound / Outbound Mail Log -->
+        <div class="lg:col-span-2 glass-panel p-5 rounded-2xl flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+              <i class="fa-solid fa-envelope-open-text text-sky-400"></i>
+              <span>Communications Thread & AI Entity Extraction</span>
+            </h3>
+            <button onclick="loadEmails()" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">
+              <i class="fa-solid fa-rotate-right mr-1"></i>Refresh Messages
+            </button>
+          </div>
+
+          <div id="emails-list-container" class="space-y-3 overflow-y-auto max-h-[550px]">
+            <div class="text-center py-10 text-slate-500 text-xs">Loading email communication logs...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: SUPPLIER INTELLIGENCE & MEMORY -->
+    <section id="view-suppliers" class="tab-content hidden space-y-6">
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-handshake text-sky-400"></i>
+              <span>Supplier Intelligence & Scorecard Memory</span>
+            </h2>
+            <p class="text-xs text-slate-400">Historical performance scorecards, on-time delivery rates, and long-term memory.</p>
+          </div>
+          <button onclick="loadSuppliers()" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">
+            <i class="fa-solid fa-rotate-right mr-1"></i>Refresh Suppliers
+          </button>
+        </div>
+
+        <div id="suppliers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="col-span-3 text-center py-10 text-slate-500 text-xs">Loading supplier intelligence...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7: RAG POLICY EXPLORER -->
+    <section id="view-rag" class="tab-content hidden space-y-6">
+      <div class="glass-panel p-5 rounded-2xl space-y-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-book-bookmark text-indigo-400"></i>
+              <span>RAG Knowledge Base & Procurement Policy Explorer</span>
+            </h2>
+            <p class="text-xs text-slate-400">Hybrid semantic & BM25 vector search over Master Agreements (MSAs), SOPs, and compliance rules.</p>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex space-x-2">
+          <input type="text" id="rag-search-input" placeholder="Ask a question (e.g. 'What is the approval limit for purchase orders?' or 'Apex Electronics lead times')..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+          <button onclick="executeRAGSearch()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center space-x-2 transition">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+          </button>
+        </div>
+
+        <div id="rag-results-container" class="space-y-3">
+          <div class="text-center py-6 text-slate-500 text-xs">Enter a search query above to query the vector knowledge store.</div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-800">
+          <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3">Pre-Indexed Enterprise Documents:</h4>
+          <div id="rag-docs-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 8: AUDIT LOGS & TRACES -->
+    <section id="view-audit" class="tab-content hidden space-y-6">
+      <div class="glass-panel p-5 rounded-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-100 flex items-center space-x-2">
+              <i class="fa-solid fa-list-check text-sky-400"></i>
+              <span>Audit Logs & Autonomous Reasoning Traces</span>
+            </h2>
+            <p class="text-xs text-slate-400">Immutable ledger of every agent reasoning step, tool call, and guardrail verification.</p>
+          </div>
+          <button onclick="loadAuditLogs()" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">
+            <i class="fa-solid fa-rotate-right mr-1"></i>Refresh Logs
+          </button>
+        </div>
+
+        <div id="audit-logs-container" class="space-y-3 overflow-y-auto max-h-[600px]">
+          <div class="text-center py-10 text-slate-500 text-xs">Loading audit traces...</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: Human Approval Resolution -->
+  <div id="modal-approval" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-slate-100 flex items-center space-x-2">
+          <i class="fa-solid fa-user-shield text-amber-400"></i>
+          <span id="modal-app-title">Review Procurement Escalation</span>
+        </h3>
+        <button onclick="closeApprovalModal()" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="space-y-3 text-xs text-slate-300">
+        <div class="p-3 bg-amber-950/30 border border-amber-900/50 rounded-xl">
+          <div class="font-bold text-amber-400 mb-1">Escalation Trigger:</div>
+          <p id="modal-app-reason" class="text-slate-300">--</p>
+        </div>
+
+        <div class="p-3 bg-slate-950 rounded-xl space-y-1">
+          <div class="font-bold text-slate-400">Agent Sourcing Rationale:</div>
+          <p id="modal-app-rationale" class="text-slate-300 italic">--</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Order Quantity (Editable)</label>
+            <input type="number" id="modal-app-qty" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Unit Price ($ USD)</label>
+            <input type="number" step="0.01" id="modal-app-price" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-semibold text-slate-400 mb-1">Buyer Notes / Justification</label>
+          <textarea id="modal-app-notes" rows="2" placeholder="e.g. Authorized special volume exception for Q3 buffer..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200"></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end space-x-2 pt-2 border-t border-slate-800">
+        <button onclick="submitApprovalDecision('REJECT')" class="px-4 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 font-bold text-xs">
+          Reject Order
+        </button>
+        <button onclick="submitApprovalDecision('MODIFY')" class="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs">
+          Modify & Approve
+        </button>
+        <button onclick="submitApprovalDecision('APPROVE')" class="px-5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20">
+          Approve & Transmit PO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-800/80 bg-slate-900/60 py-3 text-center text-xs text-slate-500">
+    ProcurePulse AI • Autonomous Supply Chain & Procurement Microservices Architecture • LangGraph + RAG + Guardrails
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

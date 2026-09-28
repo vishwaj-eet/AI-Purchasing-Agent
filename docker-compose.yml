@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  procurepulse-api:
+    build: .
+    container_name: procurepulse_api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=ProcurePulse AI
+      - APP_ENV=production
+      - DEBUG=False
+      - PORT=8000
+      - HOST=0.0.0.0
+      - DATABASE_URL=postgresql+psycopg2://procure_user:procure_pass@postgres:5432/procurepulse
+      - REDIS_URL=redis://redis:6379/0
+      - LLM_PROVIDER=mock
+      - LLM_MODEL=gpt-4o-mini
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./data:/app/data
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: procurepulse_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: procure_user
+      POSTGRES_PASSWORD: procure_pass
+      POSTGRES_DB: procurepulse
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U procure_user -d procurepulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: procurepulse_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
